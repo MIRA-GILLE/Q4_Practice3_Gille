@@ -4,46 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q4Practice3</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <hr>
-    <h2>Login Section</h2>
-    <input type="text" id="uname" placeholder="Username"><br>
-    <input type="password" id="pwd" placeholder="Password"><br>
-    <button id="loginBTN" onclick="authenticate()">Login</button>
-
-    <p id="display" class="fst-italic text-warning"></p>
+    <h2>JavaScript For Loop</h2>
+    <p id="sample1"></p>
 
     <script>
-        // We must define this OUTSIDE the function so it persists between clicks
+        let text1 = "";
+        for (let z = 0; z < 3; z++) {
+            text1 += "The number is " + z + "<br>";
+        }
+        document.getElementById("sample1").innerHTML = text1;
+    </script>
+
+    <h2>JavaScript While Loop</h2>
+    <p id="sample2"></p> 
+    
+    <script>
+        let text2 = "";
+        let y = 0;
+        while (y < 5) {
+            text2 += "The number is " + y + "<br>";
+            y++;
+        }
+        document.getElementById("sample2").innerHTML = text2;
+    </script>
+ 
+    <h2>JavaScript do-while Loop</h2>
+    <p id="sample3"></p>
+
+    <script>
+        let text3 = "";
+        let i = 0; 
+        do {
+            text3 += "The number is " + i + "<br>";
+            i++; 
+        } while (i < 5);
+        document.getElementById("sample3").innerHTML = text3;
+    </script>
+
+    <hr>
+    <h2>Login Authentication</h2>
+    <input type="text" id="uname" placeholder="Email">
+    <input type="password" id="pwd" placeholder="Password">
+    <button id="loginBTN" onclick="authenticate()">Log In</button>
+    
+    <p id="display" style="color: red; font-style: italic;"></p>
+
+    <script>
+        // Counter stays outside so it remembers attempts between clicks
         let attempt_counter = 0;
 
         function authenticate() {
-            var username, pwd, granted, denied;
-            username = document.getElementById("uname").value;
-            pwd = document.getElementById("pwd").value;
-            granted = "Welcome " + username + "!";
-            denied = "Access Denied";
-        
-            // Check credentials
-            if (username === "Ayokona" && pwd === "y0k0n4r1n") {
-                alert(granted);
-                attempt_counter = 0; 
-                document.getElementById("display").innerHTML = "";
-            } else {
-                attempt_counter++;
-                document.getElementById("display").innerHTML =
-                    "Incorrect username and/or password. Attempt " + attempt_counter + " of 3 ";
+            // Get the current values from the inputs
+            var username = document.getElementById("uname").value;
+            var pwd = document.getElementById("pwd").value;
+            var granted = "Welcome back, Ayokona!";
+            var denied = "Access Denied - Account Locked";
+
+            // The loop checks if we are still under the attempt limit
+            while (attempt_counter < 3) {
+                if (username === "ayokona@gmail.com" && pwd === "y0k0n4r1n") {
+                    alert(granted);
+                    
+                    
+                    window.location.href = "dashboard.html"; 
+                    
+                    attempt_counter = 0; 
+                    document.getElementById("display").innerHTML = "";
+                    return; 
+                } 
+                else {
+                    attempt_counter++;
+                    document.getElementById("display").innerHTML =
+                        "Incorrect credentials. Attempt " + attempt_counter + " of 3";
+                    break; 
+                }
             }
 
-            // Lock after max attempts
+            // Lockout logic
             if (attempt_counter >= 3) {
                 alert(denied);
-                document.getElementById("loginBTN").disabled = true;
+                document.getElementById("loginBTN").disabled = true; 
             }
         }
     </script>
-</body>
-</html>
